@@ -1,0 +1,89 @@
+#!/bin/bash
+
+#Set arguement variables
+FILENAME=$1                     #Filename to be used
+STYPE=$2                        #Script type
+DATE=`date +%b" "%d" "%H":"%M`  #Date
+AUTHOR=$USER                    #User who created file
+
+###Validate User input###
+
+#Check for blank arugments
+if [ -z $FILENAME  ] || [ -z $STYPE ]; then
+        echo "You forgot an argument!"
+        exit 1
+fi
+
+#Check for too many arugments, output #Args
+if [ $# -gt 2 ]; then
+        echo "Too many arguments [$#]"
+        exit 1
+fi
+
+
+###Creating the file###
+#Create file name specified in arguements (improve checking)
+if [ -e $FILENAME ]; then
+        read -p "This file already exists! Would you like to overwrite? [y/n] " -n 1 -r
+        if [[ $REPLY =~ ^[Yy]$ ]]
+        then
+                echo
+        else
+                echo;exit 1
+        fi
+else
+        #declare variable for checking if SYTPE is availible
+        case $STYPE in
+
+                bash)
+                        FILENAME+=".bash"
+                        touch $FILENAME
+                        ;;
+                ruby)
+                        FILENAME+=".rb"
+                        touch $FILENAME
+                        ;;
+                python)
+                        FILENAME+=".py"
+                        touch $FILENAME
+                        ;;
+                perl)
+                        FILENAME+=".pl"
+                        touch $FILENAME
+                        ;;
+                *)
+
+                touch $FILENAME
+        esac
+fi
+
+
+###Check for script type and append proper extension###
+
+#Set variable for path to stype
+VAR=$(which $STYPE)
+
+#If it doest exist, return error and exit
+if [ -z $VAR ]; then
+        echo "Invalid script type!"
+        exit 1
+#If it does exist write it out to the file
+else
+        echo "#!$VAR" > $FILENAME
+
+fi
+
+
+#Add in generic file header (add in function to do this with more details)
+
+echo " " >> $FILENAME
+echo "#-------------------------#" >> $FILENAME
+echo "#-File: $FILENAME" >> $FILENAME
+echo "#-Author: $AUTHOR" >> $FILENAME
+echo "#-Started: $DATE" >> $FILENAME
+echo "#-Updated:" >> $FILENAME
+echo "#-------------------------#" >> $FILENAME
+
+#Open newly created document
+
+vim $FILENAME
