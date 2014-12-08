@@ -7,7 +7,6 @@ DATE=`date +%b" "%d" "%H":"%M`  #Date
 AUTHOR=$USER                    #User who created file
 
 ###Validate User input###
-
 #Check for blank arugments
 if [ -z $FILENAME  ] || [ -z $STYPE ]; then
         echo "You forgot an argument!"
@@ -22,7 +21,28 @@ fi
 
 
 ###Creating the file###
-#Create file name specified in arguements (improve checking)
+
+#Append file extension to FILENAME variable
+case $STYPE in
+
+        bash)
+                FILENAME+=".sh"
+                ;;
+        ruby)
+                FILENAME+=".rb"
+                ;;
+        python)
+                FILENAME+=".py"
+                ;;
+        perl)
+                FILENAME+=".pl"
+                ;;
+        *)
+esac
+
+#Check to see if file exists, if it does prompt user to overwrite
+
+
 if [ -e $FILENAME ]; then
         read -p "This file already exists! Would you like to overwrite? [y/n] " -n 1 -r
         if [[ $REPLY =~ ^[Yy]$ ]]
@@ -31,32 +51,11 @@ if [ -e $FILENAME ]; then
         else
                 echo;exit 1
         fi
-else
-        #declare variable for checking if SYTPE is availible
-        case $STYPE in
-
-                bash)
-                        FILENAME+=".bash"
-                        touch $FILENAME
-                        ;;
-                ruby)
-                        FILENAME+=".rb"
-                        touch $FILENAME
-                        ;;
-                python)
-                        FILENAME+=".py"
-                        touch $FILENAME
-                        ;;
-                perl)
-                        FILENAME+=".pl"
-                        touch $FILENAME
-                        ;;
-                *)
-
-                touch $FILENAME
-        esac
 fi
 
+##CREATE THE FILE?
+
+touch $FILENAME
 
 ###Check for script type and append proper extension###
 
