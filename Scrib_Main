@@ -85,4 +85,4 @@ echo "#-------------------------#" >> $FILENAME
 
 #Open newly created document
 
-vim $FILENAME
+vim + $FILENAME
