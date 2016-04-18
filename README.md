@@ -1,4 +1,4 @@
-Scrib
+bash-n-stuff
 =====
 
-Simple Bash script to conveniently create generic script files
+Random Bash scripts that I want to keep around
